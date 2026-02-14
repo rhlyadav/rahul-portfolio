@@ -1,19 +1,51 @@
+'use client';
+
 import siteConfig, { Project } from '../../siteConfig';
 import ProjectCard from '../../components/ProjectCard';
+import { Box, Container, Typography, Stack } from '@mui/material';
 
-// Server Component: reads from a static config and renders ProjectCard (client) for each
 export default function Projects() {
   const projects: Project[] = siteConfig.projects;
+  
   return (
-    <section aria-labelledby="projects-title">
-      <h2 id="projects-title" className="text-2xl font-semibold">Projects</h2>
-      <p className="mt-2 text-slate-600">Selected work — click to view the repository or demo.</p>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        {projects.map((p) => (
-          // ProjectCard is a client component
-          <ProjectCard key={p.id} project={p} />
-        ))}
-      </div>
-    </section>
+    <Box sx={{ py: 12, backgroundColor: '#0B0F19', minHeight: '100vh' }}>
+      <Container maxWidth="lg">
+        {/* Section Header */}
+        <Stack spacing={2} sx={{ mb: 8 }}>
+          <Typography
+            variant="caption"
+            sx={{
+              color: '#00D9FF',
+              fontWeight: 700,
+              fontSize: '0.875rem',
+              textTransform: 'uppercase',
+              letterSpacing: 1,
+            }}
+          >
+            Portfolio
+          </Typography>
+          <Typography variant="h2">All Projects</Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#B0B9C3',
+              fontSize: '1.1rem',
+              maxWidth: 600,
+            }}
+          >
+            A selection of projects I have worked on, showcasing my expertise in modern web development.
+          </Typography>
+        </Stack>
+
+        {/* Projects Grid */}
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr', lg: 'repeat(3, 1fr)' }, gap: 3 }}>
+          {projects.map((project) => (
+            <Box key={project.id}>
+              <ProjectCard project={project} />
+            </Box>
+          ))}
+        </Box>
+      </Container>
+    </Box>
   );
 }

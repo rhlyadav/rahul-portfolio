@@ -1,7 +1,14 @@
 import '../styles/globals.css';
 import type { Metadata } from 'next';
-import Navbar from '../components/Navbar';
+import { Inter } from 'next/font/google';
 import siteConfig from '../siteConfig';
+import AppShell from '../components/AppShell';
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -10,19 +17,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteConfig.title,
     description: siteConfig.description,
-    url: siteConfig.url
-  }
+    url: siteConfig.url,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-white text-slate-900 antialiased">
-        <Navbar />
-        <main id="main" className="mx-auto max-w-4xl px-4 py-8">
-          {children}
-        </main>
-        <footer className="mx-auto max-w-4xl px-4 py-8 text-sm text-slate-500">© {new Date().getFullYear()} {siteConfig.name}.</footer>
+      <body className={inter.className}>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

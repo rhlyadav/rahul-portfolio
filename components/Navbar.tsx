@@ -1,36 +1,184 @@
-"use client";
+'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '../siteConfig';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Menu,
+  MenuItem,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { useState } from 'react';
 
 export default function Navbar() {
   const path = usePathname() || '/';
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <header className="w-full bg-white shadow-sm">
-      <div className="mx-auto max-w-4xl px-4 py-4 flex items-center justify-between">
-        <nav aria-label="Primary" className="flex gap-6 items-center">
-          <a href="#main" className="skip-link">Skip to content</a>
-          <Link href="/" aria-current={path === '/' ? 'page' : undefined} className="font-semibold text-lg">
-            {siteConfig.name}
+    <AppBar position="sticky" elevation={0}>
+      <Container maxWidth="lg">
+        <Toolbar
+          disableGutters
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            py: 2,
+          }}
+        >
+          {/* Logo */}
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.8 },
+              }}
+            >
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  background: 'linear-gradient(135deg, #00D9FF 0%, #00A3CC 100%)',
+                  borderRadius: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  fontSize: '1.1rem',
+                  color: '#0B0F19',
+                }}
+              >
+                RY
+              </Box>
+              <Box sx={{ fontWeight: 700, fontSize: '1.2rem', display: { xs: 'none', sm: 'block' } }}>
+                {siteConfig.name.split(' ')[0]}
+              </Box>
+            </Box>
           </Link>
-          <ul className="hidden sm:flex gap-4 items-center ml-6">
-            {siteConfig.nav.map((n) => (
-              <li key={n.href}>
-                <Link href={n.href} className={path === n.href ? 'text-blue-600' : 'text-slate-700'}>{n.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className="flex items-center gap-3">
-          <a href={siteConfig.social.github} aria-label="GitHub" className="text-slate-600 hover:text-slate-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-blue-300">
-            <FaGithub />
-          </a>
-          <a href={siteConfig.social.linkedin} aria-label="LinkedIn" className="text-slate-600 hover:text-slate-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-blue-300">
-            <FaLinkedin />
-          </a>
-        </div>
-      </div>
-    </header>
+
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 4, alignItems: 'center', flex: 1, ml: 6 }}>
+              {siteConfig.nav.map((n) => (
+                <Link key={n.href} href={n.href} style={{ textDecoration: 'none' }}>
+                  <Button
+                    sx={{
+                      color: path === n.href ? '#00D9FF' : '#B0B9C3',
+                      fontSize: '0.95rem',
+                      fontWeight: 500,
+                      borderBottom: path === n.href ? '2px solid #00D9FF' : 'none',
+                      borderRadius: 0,
+                      pb: 0.5,
+                      '&:hover': {
+                        color: '#00D9FF',
+                      },
+                    }}
+                  >
+                    {n.label}
+                  </Button>
+                </Link>
+              ))}
+            </Box>
+
+          {/* Social Icons & Mobile Menu */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 1 }}>
+              <IconButton
+                component="a"
+                href={`mailto:${siteConfig.social.email}`}
+                size="small"
+                sx={{
+                  border: '1px solid rgba(0, 217, 255, 0.3)',
+                  color: '#B0B9C3',
+                  '&:hover': {
+                    borderColor: '#00D9FF',
+                    color: '#00D9FF',
+                  },
+                }}
+              >
+                <FaEnvelope />
+              </IconButton>
+              <IconButton
+                component="a"
+                href={siteConfig.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="small"
+                sx={{
+                  border: '1px solid rgba(0, 217, 255, 0.3)',
+                  color: '#B0B9C3',
+                  '&:hover': {
+                    borderColor: '#00D9FF',
+                    color: '#00D9FF',
+                  },
+                }}
+              >
+                <FaGithub />
+              </IconButton>
+              <IconButton
+                component="a"
+                href={siteConfig.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="small"
+                sx={{
+                  border: '1px solid rgba(0, 217, 255, 0.3)',
+                  color: '#B0B9C3',
+                  '&:hover': {
+                    borderColor: '#00D9FF',
+                    color: '#00D9FF',
+                  },
+                }}
+              >
+                <FaLinkedin />
+              </IconButton>
+            </Box>
+
+            {/* Mobile Menu */}
+            <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+              <IconButton
+                size="large"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {siteConfig.nav.map((n) => (
+                  <MenuItem
+                    key={n.href}
+                    onClick={handleClose}
+                    component={Link}
+                    href={n.href}
+                  >
+                    {n.label}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
