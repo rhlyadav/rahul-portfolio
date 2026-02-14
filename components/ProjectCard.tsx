@@ -7,7 +7,7 @@ export default function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow fade-up" aria-labelledby={`proj-${project.id}`}>
       <h3 id={`proj-${project.id}`} className="font-semibold text-lg">
-        <a href={project.href} target="_blank" rel="noopener noreferrer" className="hover:underline">{project.title}</a>
+        {project.title}
       </h3>
       <p className="text-sm text-slate-600 mt-1">{project.description}</p>
       <div className="mt-3 flex items-center justify-between">
