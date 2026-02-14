@@ -176,34 +176,34 @@ export default function Hero() {
                 <Typography variant="h2" sx={{ fontSize: '4rem' }}>
                   RY
                 </Typography>
-
-                <Paper
-                  sx={{
-                    position: 'absolute',
-                    bottom: 20,
-                    right: 20,
-                    px: 2,
-                    py: 1,
-                    background: 'rgba(11, 15, 25, 0.9)',
-                    border: '1px solid rgba(0, 217, 255, 0.5)',
-                    borderRadius: 3,
-                  }}
-                >
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <Box
-                      sx={{
-                        width: 8,
-                        height: 8,
-                        borderRadius: '50%',
-                        background: '#00D9FF',
-                        animation: 'pulse 2s ease-in-out infinite',
-                      }}
-                    />
-                    <Typography variant="caption" sx={{ color: '#00D9FF', fontWeight: 600 }}>
-                      Available for hire
-                    </Typography>
-                  </Stack>
-                </Paper>
+              </Paper>
+              <Paper
+                sx={{
+                  position: 'absolute',
+                  bottom: 16,
+                  right: -4,
+                  px: 2,
+                  py: 1,
+                  background: 'rgba(11, 15, 25, 0.9)',
+                  border: '1px solid rgba(0, 217, 255, 0.5)',
+                  borderRadius: 3,
+                  zIndex: 2,
+                }}
+              >
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Box
+                    sx={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      background: '#00D9FF',
+                      animation: 'pulse 2s ease-in-out infinite',
+                    }}
+                  />
+                  <Typography variant="caption" sx={{ color: '#00D9FF', fontWeight: 600 }}>
+                    Available for hire
+                  </Typography>
+                </Stack>
               </Paper>
             </Box>
           </Box>
