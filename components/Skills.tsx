@@ -42,7 +42,10 @@ export default function Skills() {
     <Box sx={{ py: 12, backgroundColor: '#0B0F19' }}>
       <Container maxWidth="lg">
         {/* Section Header */}
-        <Stack spacing={2} sx={{ mb: 8, textAlign: 'center' }}>
+        <Stack
+          spacing={2}
+          sx={{ mb: 8, textAlign: 'center', alignItems: 'center', maxWidth: 980, mx: 'auto' }}
+        >
           <Typography
             variant="caption"
             sx={{
@@ -55,17 +58,30 @@ export default function Skills() {
           >
             Skills & Expertise
           </Typography>
-          <Typography variant="h2">Technologies I Work With</Typography>
+          <Typography
+            variant="h2"
+            sx={{
+              maxWidth: 760,
+              mx: 'auto',
+              lineHeight: 1.2,
+              textWrap: 'balance',
+              fontSize: { xs: '2.1rem', md: '3rem' },
+            }}
+          >
+            Technologies I Work With
+          </Typography>
           <Typography
             variant="body1"
             sx={{
               color: '#B0B9C3',
-              maxWidth: 600,
+              maxWidth: 680,
               mx: 'auto',
-              fontSize: '1.1rem',
+              fontSize: { xs: '1.05rem', md: '1.2rem' },
+              lineHeight: 1.7,
+              textWrap: 'balance',
             }}
           >
-            A comprehensive toolkit built over 8+ years of professional development
+            A comprehensive toolkit built over 7+ years of professional frontend development.
           </Typography>
         </Stack>
 
