@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { Card, CardMedia, CardContent, CardActions, Typography, Stack, Chip, IconButton, Box } from '@mui/material';
+import { Card, CardMedia, CardContent, CardActions, Typography, Stack, Chip, IconButton, Box, Tooltip } from '@mui/material';
 import type { Project } from '../siteConfig';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -9,6 +9,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 export default function ProjectCard({ project }: { project: Project }) {
   const [liked, setLiked] = useState(false);
+  const projectLabel = project.projectType === 'personal' ? 'Personal Project' : project.company ?? 'Company Project';
 
   return (
     <Card
@@ -41,7 +42,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
       <CardContent sx={{ flexGrow: 1 }}>
         <Chip
-          label={project.company}
+          label={projectLabel}
           size="small"
           sx={{
             mb: 1.5,
@@ -137,31 +138,53 @@ export default function ProjectCard({ project }: { project: Project }) {
             {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
         </Box>
-        <Stack direction="row" spacing={0.5}>
-          <IconButton
-            size="small"
-            href="#"
-            sx={{
-              color: '#B0B9C3',
-              '&:hover': {
-                color: '#00D9FF',
-              },
-            }}
-          >
-            <GitHubIcon fontSize="small" />
-          </IconButton>
-          <IconButton
-            size="small"
-            href="#"
-            sx={{
-              color: '#B0B9C3',
-              '&:hover': {
-                color: '#00D9FF',
-              },
-            }}
-          >
-            <OpenInNewIcon fontSize="small" />
-          </IconButton>
+
+        <Stack direction="row" spacing={0.5} alignItems="center">
+          {project.githubUrl && (
+            <Tooltip title="GitHub Repository">
+              <IconButton
+                component="a"
+                size="small"
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: '#B0B9C3',
+                  '&:hover': {
+                    color: '#00D9FF',
+                  },
+                }}
+              >
+                <GitHubIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
+
+          {project.liveUrl && (
+            <Tooltip title="Live Project">
+              <IconButton
+                component="a"
+                size="small"
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: '#B0B9C3',
+                  '&:hover': {
+                    color: '#00D9FF',
+                  },
+                }}
+              >
+                <OpenInNewIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
+
+          {!project.githubUrl && !project.liveUrl && project.projectType === 'company' && (
+            <Typography variant="caption" sx={{ color: '#B0B9C3' }}>
+              Private Work
+            </Typography>
+          )}
         </Stack>
       </CardActions>
     </Card>
